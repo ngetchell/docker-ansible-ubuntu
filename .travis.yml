@@ -1,0 +1,13 @@
+sudo: true
+dist: trusty
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t ansible-ubuntu .
+      - docker images
+      - docker tag ansible-ubuntu $DOCKER_USERNAME/ansible-ubuntu
+      - docker push $DOCKER_USERNAME/ansible-ubuntu
+
